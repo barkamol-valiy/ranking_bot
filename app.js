@@ -48,7 +48,6 @@ process.on("SIGTERM", gracefulShutdown);
 // Store user states for multi-step input
 const userStates = {};
 
-// Define commands for admins and users
 const adminCommands = [
   {
     command: "➕ Yangi ishtirokchi",
