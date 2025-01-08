@@ -9,11 +9,27 @@ const bot = new TelegramBot(process.env.BOT_TOKEN, { polling: true });
 
 process.env["NTBA_FIX_350"] = 1;
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false, // Required for Heroku Postgres
+  connectionString: process.env.DATABASE_URL || {
+    user: process.env.DB_USERNAME,
+    host: process.env.DB_HOST,
+    database: process.env.DB_NAME,
+    password: process.env.DB_PASSWORD,
+    port: process.env.DB_PORT,
   },
+  ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false,
 });
+
+// Example: Query the database
+async function testDatabaseConnection() {
+  try {
+    const res = await pool.query("SELECT NOW()");
+    console.log("Database connection successful:", res.rows[0]);
+  } catch (error) {
+    console.error("Database connection error:", error);
+  }
+}
+
+testDatabaseConnection();
 
 async function handleError(chatId, error, customMessage) {
   console.error("Error:", error);
