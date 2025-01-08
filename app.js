@@ -496,7 +496,7 @@ bot.on("message", async (msg) => {
     Vazifa: ${state.classwork_text}
   `;
 
-      await bot.sendPhoto(chatId, state.image_path, { caption: message });
+      await bot.sendPhoto(chatId, state.image_file_id, { caption: message });
       bot.sendMessage(chatId, "Ishtirokchi muvaffaqiyatli qo'shildi!");
     } catch (error) {
       console.error("Ishtirokchi qo'shishda xato:", error);
