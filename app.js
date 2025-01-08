@@ -8,13 +8,11 @@ const fetch = require("node-fetch");
 const bot = new TelegramBot(process.env.BOT_TOKEN, { polling: true });
 
 process.env["NTBA_FIX_350"] = 1;
-// Initialize PostgreSQL connection
 const pool = new Pool({
-  user: process.env.DB_USERNAME,
-  host: process.env.DB_HOST,
-  database: process.env.DB_NAME,
-  password: process.env.DB_PASSWORD,
-  port: process.env.DB_PORT,
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false, // Required for Heroku Postgres
+  },
 });
 
 async function handleError(chatId, error, customMessage) {
