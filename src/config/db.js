@@ -7,7 +7,9 @@ class Database {
     // Initialize the PostgreSQL connection pool
     this.pool = new Pool({
       connectionString: process.env.DATABASE_URL,
-      ssl: false,
+      ssl: {
+        rejectUnauthorized: false, // Required for Heroku Postgres
+      },
     });
 
     // Test the connection on initialization
